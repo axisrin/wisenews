@@ -18,6 +18,12 @@ public class Magazine {
 
     }
 
+    public Magazine(String name, String contains, String link) {
+        this.name = name;
+        this.contains = contains;
+        this.link = link;
+    }
+
     public Magazine(Long id, String name, String contains, String link) {
         this.id = id;
         this.name = name;

@@ -6,7 +6,17 @@
 </head>
 <body>
     <h1 th:text="'Hello! ' + ${name} + '! You Are on main page of Wisenews! '"></h1>
-    <div class="magazinesList">
+
+    <div class="magazines__form">
+        <form action="" method="post">
+            <input type="text" required="true" name="name" placeholder="Название Журнала">
+            <input type="text" required="true" name="contains" placeholder="Текст содержания журнала">
+            <input type="text" required="true" name="link" placeholder="Введите ссылку на журнал">
+            <button type="submit">Create Magazine Card</button>
+        </form>
+    </div>
+
+    <div class="magazines__list">
         <th:block th:if="${magazines.empty}">
             <div class="block__magazines">
                 <span>No magazines!</span>
@@ -19,5 +29,6 @@
             <span th:text="${magazine.link}"></span>
         </div>
     </div>
+
 </body>
 </html>
