@@ -7,6 +7,12 @@
 <body>
     <h1 th:text="'Hello! ' + ${name} + '! You Are on main page of Wisenews! '"></h1>
 
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+
     <div class="magazines__form">
         <form action="" method="post">
             <input type="text" required="true" name="name" placeholder="Название Журнала">

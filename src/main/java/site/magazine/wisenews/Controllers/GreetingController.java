@@ -17,20 +17,19 @@ public class GreetingController {
     @Autowired
     private MagazineRepo magazineRepo;
 
-    @GetMapping("/")
+    @GetMapping("/main")
     public String main(@RequestParam(name="name", required = false, defaultValue = "User") String name, Model model) {
         Iterable<Magazine> magazines = magazineRepo.findAll();
         model.addAttribute("magazines", magazines);
         return "main";
     }
 
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
+    @GetMapping("/")
+    public String greeting(Model model) {
         return "greeting";
     }
 
-    @PostMapping("/")
+    @PostMapping("/main")
     public String mainAddMagazineCard(@RequestParam String name,
                                       @RequestParam String contains,
                                       @RequestParam String link,
