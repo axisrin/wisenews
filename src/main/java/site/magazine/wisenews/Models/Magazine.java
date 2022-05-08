@@ -1,9 +1,8 @@
 package site.magazine.wisenews.Models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Magazine {
@@ -13,10 +12,9 @@ public class Magazine {
     private String name;
     private String contains;
     private String link;
+    private String tags;
 
-    public Magazine() {
-
-    }
+    public Magazine() {}
 
     public Magazine(String name, String contains, String link) {
         this.name = name;
@@ -29,6 +27,29 @@ public class Magazine {
         this.name = name;
         this.contains = contains;
         this.link = link;
+    }
+
+    public Magazine(Long id, String name, String contains, String link, String tags) {
+        this.id = id;
+        this.name = name;
+        this.contains = contains;
+        this.link = link;
+        this.tags = tags;
+    }
+
+    public Magazine(String name, String contains, String link, String tags) {
+        this.name = name;
+        this.contains = contains;
+        this.link = link;
+        this.tags = tags;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 
     public Long getId() {
