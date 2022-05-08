@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wisenews | Main Page</title>
+</head>
+<body>
+    <h1 th:text="'Hello! ' + ${name} + '! You Are on main page of Wisenews! '"></h1>
+    <div class="magazinesList">
+        <th:block th:if="${magazines.empty}">
+            <div class="block__magazines">
+                <span>No magazines!</span>
+            </div>
+        </th:block>
+        <div th:each="magazine: ${magazines}">
+            <span th:text="${magazine.id}"></span>
+            <span th:text="${magazine.name}"></span>
+            <span th:text="${magazine.contains}"></span>
+            <span th:text="${magazine.link}"></span>
+        </div>
+    </div>
+</body>
+</html>
