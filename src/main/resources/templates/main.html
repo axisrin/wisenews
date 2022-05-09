@@ -14,7 +14,7 @@
     </div>
 
     <div class="magazines__form">
-        <form action="" method="post">
+        <form th:action="@{/main}" method="post">
             <input type="text" required="true" name="name" placeholder="Название Журнала">
             <input type="text" required="true" name="contains" placeholder="Текст содержания журнала">
             <input type="text" required="true" name="link" placeholder="Введите ссылку на журнал">
@@ -24,7 +24,7 @@
     </div>
 
     <div class="magazines__filter">
-        <form action="filter" method="post">
+        <form th:action="@{/filter}" method="post">
             <input type="text" name="filter" placeholder="Введите название тега">
             <button type="submit">Find Magazines</button>
         </form>
@@ -42,6 +42,7 @@
             <span th:text="${magazine.contains}"></span>
             <span th:text="${magazine.link}"></span>
             <span th:text="${magazine.tags}"></span>
+            <span th:text="${magazine.getAuthor()}"></span>
         </div>
     </div>
 

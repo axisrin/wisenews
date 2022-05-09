@@ -1,8 +1,6 @@
 package site.magazine.wisenews.Models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 public class Magazine {
@@ -13,6 +11,10 @@ public class Magazine {
     private String contains;
     private String link;
     private String tags;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User author;
 
     public Magazine() {}
 
@@ -42,6 +44,24 @@ public class Magazine {
         this.contains = contains;
         this.link = link;
         this.tags = tags;
+    }
+
+    public Magazine(String name, String contains, String link, String tags, User author) {
+        this.name = name;
+        this.contains = contains;
+        this.link = link;
+        this.tags = tags;
+        this.author = author;
+    }
+
+    public String getAuthor() {
+        if (author != null)
+            return author.getUsername();
+        return "none";
+    }
+
+    public void setAuthor(User author) {
+        this.author = author;
     }
 
     public String getTags() {
