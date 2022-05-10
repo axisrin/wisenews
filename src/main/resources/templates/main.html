@@ -24,8 +24,8 @@
     </div>
 
     <div class="magazines__filter">
-        <form th:action="@{/filter}" method="post">
-            <input type="text" name="filter" placeholder="Введите название тега">
+        <form th:action="@{/main}" method="get">
+            <input type="text" th:value="${filter}" name="filter" placeholder="Введите название тега">
             <button type="submit">Find Magazines</button>
         </form>
     </div>

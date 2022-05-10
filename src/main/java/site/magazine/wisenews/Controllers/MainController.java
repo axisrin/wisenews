@@ -21,9 +21,15 @@ public class MainController {
 
     @GetMapping("/main")
     public String main(@RequestParam(name="name", required = false, defaultValue = "User") String name,
+                       @RequestParam(required = false, defaultValue = "") String filter,
                        Model model) {
-        Iterable<Magazine> magazines = magazineRepo.findAll();
+
+        List<Magazine> magazines = magazineRepo.findByTags(filter);
+        if (magazines.isEmpty())
+            magazines = magazineRepo.findAll();
+
         model.addAttribute("magazines", magazines);
+        model.addAttribute("filter", filter);
         return "main";
     }
 
@@ -46,14 +52,6 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping("/filter")
-    public String filter(@RequestParam String filter,
-                         Model model) {
-        List<Magazine> magazines = magazineRepo.findByTags(filter);
-        if (magazines.isEmpty())
-            magazines = magazineRepo.findAll();
-        model.addAttribute("magazines", magazines);
-        return "main";
-    }
+
 
 }
