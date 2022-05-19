@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<div th:fragment="header">
+    <a th:href="@{/main}">Main Page</a>
+    <a sec:authorize="hasAuthority('ADMIN')" th:href="@{/user}">User List</a>
+    <div>
+        <form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+    </div>
+</div>
+
+</html>

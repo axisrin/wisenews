@@ -11,6 +11,7 @@ public class Magazine {
     private String contains;
     private String link;
     private String tags;
+    private String filename;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
@@ -102,5 +103,13 @@ public class Magazine {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

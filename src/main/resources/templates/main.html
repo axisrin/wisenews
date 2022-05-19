@@ -1,24 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Wisenews | Main Page</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
+    <div th:replace="~{fragments/header-frag :: header}"></div>
+
     <h1 th:text="'Hello! ' + ${name} + '! You Are on main page of Wisenews! '"></h1>
 
-    <div>
-        <form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
-    </div>
-
     <div class="magazines__form">
-        <form th:action="@{/main}" method="post">
+        <form th:action="@{/main}" method="post" enctype="multipart/form-data">
             <input type="text" required="true" name="name" placeholder="Название Журнала">
             <input type="text" required="true" name="contains" placeholder="Текст содержания журнала">
             <input type="text" required="true" name="link" placeholder="Введите ссылку на журнал">
             <input type="text" required="true" name="tag" placeholder="Введите тэги">
+            <input type="file" name="file">
             <button type="submit">Create Magazine Card</button>
         </form>
     </div>
@@ -37,6 +35,9 @@
             </div>
         </th:block>
         <div th:each="magazine: ${magazines}">
+            <th:block th:if="${magazine.filename}">
+                <img th:src="@{/img/{filename}(filename=${magazine.filename})}" alt="img">
+            </th:block>
             <span th:text="${magazine.id}"></span>
             <span th:text="${magazine.name}"></span>
             <span th:text="${magazine.contains}"></span>

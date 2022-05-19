@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wisenews | User Edit</title>
+    <link rel="stylesheet" href="/static/style.css">
+
+</head>
+<body>
+
+<div th:replace="~{fragments/header-frag :: header}"></div>
+
+<form th:action="@{/user}" method="post">
+    <input type="text" th:value="${user.username}" name="username">
+    <input type="hidden" th:value="${user.id}" name="userId">
+    <div th:each="role : ${roles}">
+        <label th:for="${role}" th:text="${role}"></label>
+        <input type="checkbox" th:checked="${#lists.contains(user.roles, role)}" th:name="${role}">
+    </div>
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>
