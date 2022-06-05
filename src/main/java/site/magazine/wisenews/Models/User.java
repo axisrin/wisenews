@@ -19,7 +19,10 @@ public class User implements UserDetails {
     private String password;
     private boolean active;
 
-    @ElementCollection
+    private String email;
+    private String activationCode;
+
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "user_liked_tags", joinColumns = @JoinColumn(name = "user_id"))
     private Set<String> likedTagsMagazines;
 
@@ -112,4 +115,19 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
 }

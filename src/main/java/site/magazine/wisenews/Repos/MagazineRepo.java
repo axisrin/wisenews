@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MagazineRepo extends JpaRepository<Magazine, Long> {
     List<Magazine> findByTags(String tag);
+
 }
