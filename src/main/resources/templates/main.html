@@ -1,23 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Wisenews | Main Page</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 <body>
-    <h1 th:text="'Hello! ' + ${name} + '! You Are on main page of Wisenews! '"></h1>
-    <div class="magazinesList">
-        <th:block th:if="${magazines.empty}">
-            <div class="block__magazines">
-                <span>No magazines!</span>
+
+<div th:replace="~{fragments/header-frag :: header1}"></div>
+
+    <div class="container mt-4">
+
+        <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-outline-dark mb-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Add new Magazine
+        </a>
+        <div class="magazines__form mb-2 collapse" id="collapseExample">
+            <div class="form-group">
+                <form th:action="@{/main}" sec:authorize="hasAuthority('ADMIN')" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="text" class="form-control" required="true" name="name" placeholder="Название Журнала">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" required="true" name="contains" placeholder="Текст содержания журнала">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" required="true" name="link" placeholder="Введите ссылку на журнал">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" required="true" name="tag" placeholder="Введите тэги">
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input type="file" name="file" id="customFile">
+                            <label class="custom-file-label" for="customFile">Choose img of Magazine</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-success" type="submit">Create Magazine Card</button>
+                    </div>
+                </form>
             </div>
-        </th:block>
-        <div th:each="magazine: ${magazines}">
-            <span th:text="${magazine.id}"></span>
-            <span th:text="${magazine.name}"></span>
-            <span th:text="${magazine.contains}"></span>
-            <span th:text="${magazine.link}"></span>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 magazines__filter">
+                <form th:action="@{/main}" method="get" class="form-inline">
+                    <input type="text" th:value="${filter}" class="form-control mr-2" name="filter" placeholder="Введите название тега">
+                    <button type="submit" class="btn btn-outline-dark">Find Magazines</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 g-4">
+            <th:block th:if="${magazines.empty}">
+                <div class="block__magazines">
+                    <span>No magazines!</span>
+                </div>
+            </th:block>
+            <div class="col" th:each="magazine: ${magazines}">
+                <div class="card my-2" style="width: 18rem;">
+                    <th:block th:if="${magazine.filename}">
+                        <img class="card-img-top" th:src="@{/img/{filename}(filename=${magazine.filename})}" alt="img">
+                    </th:block>
+                    <div class="card-body">
+                        <div class="m-2">
+                            <h5 class="card-title" th:text="${magazine.name}"></h5>
+                            <h6 class="card-subtitle mb-2 text-muted" th:text="${magazine.tags}"></h6>
+                            <span class="card-text" th:text="${magazine.contains}"></span>
+                            <a th:href="${magazine.link}" style="width: 100%;" class="btn btn-outline-dark">Read it!</a>
+<!--                            <span th:text="${magazine.link}"></span>-->
+                            <form class="mt-1" th:action="@{/main/addLikeMagazine}">
+                                <input type="hidden" name="magazid" th:value="${magazine.getId()}">
+                                <button style="width: 100%;" class="btn btn-outline-dark">Like</button>
+                            </form>
+                        </div>
+                        <div sec:authorize="hasAuthority('ADMIN')" class="card-footer">
+                            <div>
+                                <span sec:authorize="hasAuthority('ADMIN')" th:text="'Author is ' + ${magazine.getAuthor()}"></span>
+                            </div>
+                            <div>
+                                <span sec:authorize="hasAuthority('ADMIN')" th:text="'Id magazine is ' + ${magazine.id}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
 </html>
